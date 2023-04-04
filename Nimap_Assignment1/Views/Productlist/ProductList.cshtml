@@ -1,0 +1,58 @@
+﻿@*@model IEnumerable<ManojHiray_Nimap.Models.PaginationRecords>*@
+@model ManojHiray_Nimap.Models.PaginationRecords
+
+@{
+    ViewBag.Title = "Product List";
+}
+
+<h2>Product List</h2>
+
+<div>
+    <table class="table">
+        <tr >
+            <th>ProductId</th>
+            <th>ProductName</th>
+            <th>CategoryId</th>
+            <th>CategoryName</th>
+        </tr>
+
+        @foreach (var item in Model.Records)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.CategoryId</td>
+                <td>@item.CategoryName</td>
+                @*<td>@Html.ActionLink("Edit", "Edit", new { id = item.ProductId })</td>
+                    <td>@Html.ActionLink("Delete", "Delete", new { id = item.ProductId })</td>*@
+            </tr>
+        }
+    </table>
+
+</div>
+
+@if (Model.PageNumber > 1)
+{
+    <a asp-action="ProductList" asp-route-pageNumber="@(Model.PageNumber - 1)">Previous</a>
+}
+<div>
+   
+        <nav>
+            <ul class="pagination">
+
+                @for (int i = 1; i <= Model.Count; i++)
+                {
+                <li >
+                    <a class="page-link" href="@Url.Action("ProductList", new { pageNumber = i, pageSize = Model.PageSize })">@i</a>
+                </li>
+                }
+            </ul>
+        </nav>
+   
+</div>
+@if (Model.Count == Model.PageSize)
+{
+    <a asp-action="ProductList" asp-route-pageNumber="@(Model.PageNumber + 1)">Next >></a>
+}
+
+
